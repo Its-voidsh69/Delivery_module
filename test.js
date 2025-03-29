@@ -1,14 +1,7 @@
 const {
-  GetPickupLocations,
-  GetOrderDetails,
-  exportOrders,
   createReturnOrder,
   fetchOrderDetails,
-  getShipments,
-  getShipmentById,
-  getOrderDetails,
   checkOrderExists,
-  createReturnOrderFromExisting,
   // createExchangeOrder
 } = require("./index");
 
@@ -43,6 +36,21 @@ const {
 const {
   GetAllOrders,
 } = require('./orders/getAllorders')
+const {
+  GetOrderDetails,
+} = require('./orders/getSpecificOrders')
+const {
+  exportOrders,
+} = require('./orders/exportOrders')
+const {
+  getShipments,
+} = require('./shipments/getAllShipments')
+const {
+  getShipmentById,
+} = require('./shipments/getShipmentById')
+const {
+  createReturnOrderFromExisting,
+} = require('./Return_orders/createReturnOrder')
 
 async function testGetToken() {
   try {
@@ -53,37 +61,6 @@ async function testGetToken() {
     console.log("Token:", token);
   } catch (error) {
     console.error("Error fetching token:", error.message);
-  }
-}
-
-async function testPickupLocations() {
-  try {
-    const auth = {
-      email: "sum.itnull@2004",
-      password: "Ss@2004",
-    };
-    const pickupLocations = await GetPickupLocations({ auth });
-
-    console.log("Pickup Locations:", pickupLocations);
-
-    if (!pickupLocations.length) {
-      console.log("No pickup locations found for your account.");
-      return null;
-    }
-
-    const primaryLocation = pickupLocations.find(
-      (location) => location.is_primary_location === 1
-    );
-
-    if (primaryLocation) {
-      console.log("Using Primary Pickup Location:", primaryLocation.pickup_location);
-      return primaryLocation.pickup_location;
-    } else {
-      console.log("No primary pickup location found.");
-      return null;
-    }
-  } catch (error) {
-    console.error("Error fetching pickup locations:", error.message);
   }
 }
 
@@ -457,12 +434,12 @@ async function testLogout() {
     //  await testGenerateOrder();
     //  await testCheckCourierServiceability();               
   //  await testGenerateAWB();
- await testGetAllOrders();
+//  await testGetAllOrders();
 //  await testUpdateOrderAddress();
   // await testGetOrderDetails(); // working as expected
   //  await testUpdatePickupLocation();
   //  await testGeneratePickupRequest();
- // await testExportOrders();     // this will create the csv file of all the user in the report section under tool
+ await testExportOrders();     // this will create the csv file of all the user in the report section under tool
     //  await testGetShipments();
     // await testGetShipmentById();
     //  await testCreateReturnOrder(); // working finally
